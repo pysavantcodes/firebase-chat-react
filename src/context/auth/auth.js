@@ -38,9 +38,7 @@ const AuthProvider = (props) => {
 
                 email: user.email
             });
-            await setDoc(doc(db, "chats", user.email), {
-                messages: null
-            });
+
 
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -73,7 +71,7 @@ const AuthProvider = (props) => {
 
                 checkUserAvailability(user.email).then((result) => {
                     if (result === false) {
-                        addUser({ name: user.displayName, profilePhoto: user.photoURL, messages: null, email: user.email })
+                        addUser({ name: user.displayName, profilePhoto: user.photoURL, email: user.email })
                     }
                     return null
                 })

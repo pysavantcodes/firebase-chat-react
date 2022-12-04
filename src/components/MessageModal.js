@@ -41,9 +41,7 @@ const MessageModal = ({ userInfo, showModal }) => {
     }
   });
 
-  const sortedAsc = myChats.sort(
-    (objA, objB) => Number(objA.time) - Number(objB.time)
-  );
+  const sortedAsc = myChats.sort((objA, objB) => objA.time - objB.time);
   console.log(sortedAsc);
 
   return (

@@ -13,6 +13,13 @@ const AuthProvider = (props) => {
     const [allUsers, setAllUsers] = useState([]);
     const colRef = collection(db, "users");
     useEffect(() => {
+
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            setUser(foundUser);
+        }
+
         onSnapshot(colRef, (snapshot) => {
             var tempList = []
             snapshot.docs.forEach(doc => {
@@ -66,7 +73,8 @@ const AuthProvider = (props) => {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider).then((result) => {
                 const user = result.user;
-                setUser(user)
+                setUser(user);
+                localStorage.setItem("user", JSON.stringify(user))
                 toast.success("User login successful");
 
                 checkUserAvailability(user.email).then((result) => {

@@ -209,7 +209,6 @@ body {
     background-color: #298bff;
     width: fit-content;
     text-align: left;
-    word-wrap:break-word;
 }
 
 .modal .message-body ul .received p {
@@ -219,8 +218,6 @@ body {
     max-width: 49%;
     background-color: #383838;
     width: fit-content;
-    word-wrap:break-word;
-
 }
 
 .modal .img {

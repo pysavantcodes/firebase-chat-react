@@ -16,6 +16,9 @@ const Home = () => {
     .filter((person) => person.email !== user.email)
     .filter((user) => {
       return user.name.toLowerCase().includes(search.toLowerCase());
+    })
+    .sort((a, b) => {
+      return a.name.localeCompare(b.name);
     });
 
   return (

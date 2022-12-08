@@ -196,8 +196,8 @@ const MessageModal = ({ userInfo, showModal }) => {
           <h1>{userInfo.name}</h1>
         </div>
 
-        <div className="message-body">
-          <ul ref={scroll}>
+        <div ref={scroll} className="message-body">
+          <ul>
             {sortedAsc.map((data) => {
               return (
                 <>

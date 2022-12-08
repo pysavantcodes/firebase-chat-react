@@ -181,21 +181,20 @@ body {
 }
 
 
-/* .modal .message-body {
+ .modal .message-body {
     padding: 1rem;
     padding-top: calc(70px + 1rem);
     padding-bottom: calc(72px + 1rem);
     overflow: auto;
     max-height: 100vh;
-} */
+} 
 
 .modal .message-body ul {
     list-style: none;
-    padding: 1rem;
-    padding-top: calc(70px + 1rem);
+   
+   
     padding-bottom: calc(72px + 1rem);
-    overflow: auto;
-    max-height: 100vh;
+    
 }
 
 .modal .message-body ul li {

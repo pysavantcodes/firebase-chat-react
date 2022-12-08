@@ -9,6 +9,7 @@
 
 body {
     background: rgb(0, 0, 0);
+    padding-bottom: calc(72px + 1rem);
 }
 
 .App {
@@ -176,6 +177,7 @@ body {
     top: 0;
     left: 0;
     background-color: black;
+    z-index: 999;
 }
 
 .modal .message-body {

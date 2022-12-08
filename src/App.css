@@ -9,7 +9,7 @@
 
 body {
     background: rgb(0, 0, 0);
-    padding-bottom: calc(72px + 1rem);
+    padding-bottom: calc(72px + .5rem);
 }
 
 .App {

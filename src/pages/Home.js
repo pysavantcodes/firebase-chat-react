@@ -1,16 +1,116 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import MessageModal from "../components/MessageModal";
 import { useAuth } from "../hooks/useAuth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const Home = () => {
   const { user, allUsers, logOut } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState("");
   const [userInfo, setUserInfo] = useState({});
-  //   useEffect(() => {
-  //     getAllUsers();
-  //   }, [getAllUsers]);
+  const start = useRef();
+  const stop = useRef();
+
+  const storage = getStorage();
+  const [audio, setAudio] = useState({
+    isRecording: false,
+    blobURL: "",
+    isBlocked: false,
+  });
+
+  const constraints = { audio: true };
+  let chunks = [];
+  let blobData = {};
+
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then((stream) => {
+      const mediaRecorder = new MediaRecorder(stream);
+
+      // visualize(stream);
+
+      start.current.addEventListener("click", () => {
+        audio.blobURL = "";
+        if (navigator.mediaDevices) {
+          mediaRecorder.start();
+          console.log(mediaRecorder.state);
+          console.log("recorder started");
+        } else {
+          console.log("Not supported");
+        }
+      });
+
+      stop.current.addEventListener("click", () => {
+        if (navigator.mediaDevices) {
+          mediaRecorder.stop();
+          console.log(mediaRecorder.state);
+          console.log("recorder stopped");
+        } else {
+          console.log("Not supported");
+        }
+      });
+
+      mediaRecorder.onstop = (e) => {
+        const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+        chunks = [];
+        const audioURL = URL.createObjectURL(blob);
+        audio.blobURL = audioURL.split("blob:")[1];
+        blobData = blob;
+        console.log("recorder stopped");
+        console.log(audioURL.split("blob:")[1]);
+      };
+
+      mediaRecorder.ondataavailable = (e) => {
+        chunks.push(e.data);
+        console.log(chunks);
+      };
+    })
+    .catch((err) => {
+      console.error(`The following error occurred: ${err}`);
+    });
+
+  // const upload = () => {
+  //   const storageRef = ref(storage, "audios/" + Date.now());
+  //   const uploadTask = uploadBytesResumable(storageRef, blobData);
+
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       console.log("Upload is " + progress + "% done");
+  //       switch (snapshot.state) {
+  //         case "paused":
+  //           console.log("Upload is paused");
+  //           break;
+  //         case "running":
+  //           console.log("Upload is running");
+  //           break;
+  //       }
+  //     },
+  //     (error) => {
+  //       switch (error.code) {
+  //         case "storage/unauthorized":
+  //           break;
+  //         case "storage/canceled":
+  //           break;
+  //         case "storage/unknown":
+  //           break;
+  //       }
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         console.log("File available at", downloadURL);
+  //       });
+  //     }
+  //   );
+  // };
 
   const filtered = allUsers
     .filter((person) => person.email !== user.email)
@@ -74,6 +174,10 @@ const Home = () => {
           </p>
         )}
       </div>
+      {/* <button ref={start}>Record</button>
+      <button ref={stop}>Stop</button>
+      <audio src={audio.blobURL} controls="controls" />
+      <button onClick={() => upload()}>Upload</button> */}
     </div>
   );
 };

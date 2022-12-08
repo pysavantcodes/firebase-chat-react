@@ -239,8 +239,82 @@ body {
     column-gap: 10px;
 }
 
+.modal .audio {
+    position: absolute;
+    width: 100%;
+    bottom: 72px;
+    padding: 1rem;
+    background: black;
+    overflow: hidden;
+}
+
+.modal .audio .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal .audio p {
+    font-size: 14px;
+}
+
+.modal .audio .btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal .audio .btns span {
+    font-size: 13px;
+    padding: 5px 10px;
+}
+
+.modal .audio .btns span:nth-child(2) {
+    background-color: red;
+    border-radius: 5px;
+}
+
+.modal .audio .btns span:nth-child(1) {
+    background-color: #4FBF26;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.modal .audio .row-audio {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 10px 0;
+    justify-content: space-between;
+    padding-top: 13px;
+}
+
 .modal .send p:active {
     opacity: 0.6;
+}
+
+.modal .audio .anim {
+    overflow: hidden;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+}
+
+.modal .audio .anim img {
+    width: 100%;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.modal .audio .upload p {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.066);
+    padding: 7px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .modal .send p {
@@ -273,6 +347,50 @@ body {
 
 .modal span {
     cursor: pointer;
+}
+
+audio.sent {
+    display: flex;
+    flex-direction: column;
+}
+
+.audio-chat {
+    margin-bottom: 15px;
+}
+
+.audio-chat i {
+    font-size: 11px;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+audio {
+    max-width: 50%;
+    height: 35px;
+}
+
+audio.sent-audio::-webkit-media-controls-panel {
+    background: #298bff;
+}
+
+audio.received-audio::-webkit-media-controls-panel {
+    background: #383838;
+    border: none;
+}
+
+audio::-webkit-media-controls-mute-button {
+    display: none !important;
+}
+
+audio::-webkit-media-controls-volume-slider {
+    display: none !important;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-play-button {
+    color: white;
 }
 
 @media (max-width:1000px) {

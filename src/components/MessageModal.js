@@ -12,6 +12,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { toast } from "react-toastify";
 
 const MessageModal = ({ userInfo, showModal }) => {
   const [message, setMessage] = useState("");
@@ -26,8 +27,20 @@ const MessageModal = ({ userInfo, showModal }) => {
   const start = useRef();
   const stop = useRef();
   const audioRef = useRef();
+  const scroll = useRef();
   //   const [chats, setChats] = useState([])
   //send audio
+
+  useEffect(() => {
+    const scrollToBottomWithSmoothScroll = () => {
+      scroll.current.scrollTo({
+        top: scroll.current.scrollHeight,
+        behavior: "smooth",
+      });
+    };
+    scrollToBottomWithSmoothScroll();
+  }, []);
+
   const storage = getStorage();
   const [audio, setAudio] = useState({
     isRecording: false,
@@ -129,6 +142,7 @@ const MessageModal = ({ userInfo, showModal }) => {
             message: downloadURL,
             info: userInfo.email,
           });
+          setRecordMessage(false);
         });
       }
     );
@@ -183,7 +197,7 @@ const MessageModal = ({ userInfo, showModal }) => {
         </div>
 
         <div className="message-body">
-          <ul>
+          <ul ref={scroll}>
             {sortedAsc.map((data) => {
               return (
                 <>
@@ -295,10 +309,12 @@ const MessageModal = ({ userInfo, showModal }) => {
           <div>
             <p
               onClick={() => {
-                sendMessage({
-                  message: inputRef.current.value,
-                  info: userInfo.email,
-                });
+                inputRef.current.value === ""
+                  ? toast.warning("Please enter field.")
+                  : sendMessage({
+                      message: inputRef.current.value,
+                      info: userInfo.email,
+                    });
                 inputRef.current.value = "";
               }}
             >

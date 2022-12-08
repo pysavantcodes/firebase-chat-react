@@ -190,6 +190,7 @@ body {
 
 .modal .message-body ul {
     list-style: none;
+    padding-bottom: calc(72px + 1.5rem);
 }
 
 .modal .message-body ul li {
